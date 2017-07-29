@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Coding Exercise 1 - Attendee List</title>
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="data.js"></script>
+    <style>
+      .card {
+          box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+          transition: 0.3s;
+          width: 20%;
+          margin: 25px;
+          display: inline-block;
+      }
+      .container {
+          padding: 2px 16px;
+      }
+      .avatar {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+    // In step 4, we use the map() function on the registered list to return a new array containing
+    // <AttendeeCard key={attendee.id} attendee={attendee} /> for each attendee
+
+    function App() {
+      const registered = data;
+
+      return (
+        <div>
+          <Header />
+          <AttendeeList registered = {registered}/>
+        </div>
+      );
+    }
+
+    function Header() {
+      return (
+        <div>
+          <h1>Introduction to React Presentation</h1>
+          <h2>Attendee List</h2>
+          <hr />
+        </div>
+      );
+    }
+
+    function AttendeeList(props) {
+      const registered = props.registered;
+      const attendeeCard = registered.map((attendee) =>
+        <AttendeeCard key={attendee.id} attendee={attendee} />
+      );
+
+      return (
+        <div>
+          {attendeeCard}
+        </div>
+      );
+    }
+
+    // This is an alternate way to do the same thing
+    // function AttendeeList(props) {
+    //   const registered = props.registered;
+    //
+    //   return (
+    //     <div>
+    //       {registered.map((attendee) =>
+    //         <AttendeeCard key={attendee.id} attendee={attendee} />
+    //       )}
+    //     </div>
+    //   );
+    // }
+
+    function AttendeeCard(props) {
+      return (
+        <div className="card">
+         <img src={props.attendee.avatar} alt="Avatar" className="avatar" />
+         <div className="container">
+           <h4><b>{props.attendee.name}</b></h4>
+           <p>{props.attendee.role}</p>
+         </div>
+       </div>
+      );
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById('app')
+    );
+
+    </script>
+  </body>
+</html>
